@@ -10,6 +10,7 @@ const mongoUri: string = "mongodb://localhost:27017/inventory-management-mdb?rea
 
 // app.use(contextPath, router)
 app.use(express.json());
+app.use(express.static('api'));
 
 app.get('/', (req, res) => {
   res.send("server is running.");
@@ -25,12 +26,15 @@ app.post('/materials/new', (req, res) => {
 
 app.get('/materials/:name', (req, res) => {
   var materialName = req.params.name;
+  console.log(materialName);
   findMaterialByName(materialName).then(material => {
     if(material) {
-      res.send({name: material.name, type: material.type});
+      res.send({status: "success", message: "material found", payload: {name: material.name, type: material.type}});
+    } else {
+      res.send({status: "failed", message: "no such data", payload: null});
     }
   }).catch(err => {
-    res.send(err.getMessage());
+    res.send({status: "failed", message: "error occured", payload: err.getMessage()});
   });
 });
 
