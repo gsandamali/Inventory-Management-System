@@ -6,7 +6,7 @@ const app = express();
 // const router = express.Router();
 const port = 3000;
 // const contextPath = '/api';
-const mongoUri: string = "mongodb://localhost:27017/inventory-management-mdb?readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+const mongoUri: string = "local url";
 
 // app.use(contextPath, router)
 app.use(express.json());
