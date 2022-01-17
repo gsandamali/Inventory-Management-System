@@ -1,27 +1,29 @@
 import { Router } from "express"
 import { saveMaterial, findMaterialByName } from '../service/material.service';
+import { mapToMaterial } from '../utils/material.mapper';
+import { mapToResponseBody } from '../utils/responseBody.mapper';
 
 const materialRoutes = Router();
 
 materialRoutes.post('/new', (req, res) => {
-    saveMaterial({name: req.body.name, type: req.body.type}).then(() => {
-      res.send("saved successfully!");
+    saveMaterial(mapToMaterial(req)).then(() => {
+      res.send(mapToResponseBody("SUCCESS", "data saved", null));
     }).catch(err => {
-      res.send(err.getMessage());
+      res.send(mapToResponseBody("FAILED", err.getMessage(), null));
     });
   });
 
-  materialRoutes.get('/:name', (req, res) => {
-    let materialName = req.params.name;
+  materialRoutes.get('/:product', (req, res) => {
+    let materialName = req.params.product;
     console.log(materialName);
     findMaterialByName(materialName).then(material => {
       if(material) {
-        res.send({status: "success", message: "material found", payload: {name: material.name, type: material.type}});
+        res.send(mapToResponseBody("SUCCESS", "Data found", material));
       } else {
-        res.send({status: "failed", message: "no such data", payload: null});
+        res.send(mapToResponseBody("FAILED", "No data", null));
       }
     }).catch(err => {
-      res.send({status: "failed", message: "error occured", payload: err.getMessage()});
+      res.send(mapToResponseBody("FAILED", err.getMessage(), null));
     });
   });
 
