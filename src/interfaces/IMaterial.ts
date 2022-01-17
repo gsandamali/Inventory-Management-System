@@ -1,5 +1,5 @@
 export interface IMaterial {
-    name: string;
+    productName: string;
     amount: number;
     unit: string;
     direction: string
