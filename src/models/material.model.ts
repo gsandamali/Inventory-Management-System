@@ -2,8 +2,10 @@ import mongoose from 'mongoose';
 import { IMaterial } from '../interfaces/IMaterial';
 
 const MaterialSchema = new mongoose.Schema({
-  name: String,
-  type: String
+  productName: String,
+  amount: Number,
+  unit: String,
+  direction: String
 });
 
 let MaterialModel = mongoose.model<IMaterial>('material', MaterialSchema);
