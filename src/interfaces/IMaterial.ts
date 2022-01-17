@@ -1,4 +1,6 @@
 export interface IMaterial {
     name: string;
-    type: string;
+    amount: number;
+    unit: string;
+    direction: string
 }
