@@ -7,7 +7,7 @@ async function saveMaterial(material: IMaterial) {
 }
 
 async function findMaterialByName(materialName: string) {
-    var material = await MaterialModel.findOne({name: materialName});
+    var material = await MaterialModel.findOne({Product: materialName});
     console.log(material);
     return material;
 }
