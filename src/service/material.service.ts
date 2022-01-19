@@ -6,10 +6,22 @@ async function saveMaterial(material: IMaterial) {
     materialToSave.save();
 }
 
-async function findMaterialByName(materialName: string) {
-    var material = await MaterialModel.findOne({Product: materialName});
+async function findMaterialByProduct(materialProduct: string) {
+    var material = await MaterialModel.findOne({product: materialProduct});
     console.log(material);
     return material;
 }
 
-export { saveMaterial, findMaterialByName };
+async function getMaterialSummary() {
+    
+    const pipeline = [
+        { $match: {} },
+        { $group: {_id: "$product", sumQuantity: { $sum: "$quantity" }}}
+    ];
+    
+    var summary = await MaterialModel.aggregate(pipeline);
+    console.log(summary);
+    return summary;
+}
+
+export { saveMaterial, findMaterialByProduct, getMaterialSummary};
